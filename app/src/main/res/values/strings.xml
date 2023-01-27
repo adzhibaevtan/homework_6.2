@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">GalleryHW2</string>
-    <string name="chance">Выбор Фотографии</string>
-    <string name="select">Выбрано 0 фотографии</string>
-    <string name="selected">Выбранные фотографии</string>
-    <string name="ready">Готово</string>
+    <string name="app_name">HW-6.2</string>
+    <string name="chance">Select images</string>
+    <string name="select">0 photos selected</string>
+    <string name="selected">Selected images</string>
+    <string name="ready">Ready</string>
 </resources>

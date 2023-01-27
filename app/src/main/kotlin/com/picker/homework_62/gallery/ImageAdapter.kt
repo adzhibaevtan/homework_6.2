@@ -1,39 +1,23 @@
 package com.picker.homework_62.gallery
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.picker.homework_62.databinding.GalleryItemBinding
 import com.picker.homework_62.utils.loadImage
+import kotlinx.coroutines.NonDisposableHandle.parent
 
 
-class ImageAdapter : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
+class ImageAdapter: RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
+    private lateinit var listener : OnItemClick
     private val listImage = arrayListOf<ImageModel>()
-    private lateinit var listener: OnItemClick
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
-        return ImageViewHolder(
-            GalleryItemBinding.inflate(
-                LayoutInflater.from(
-                    parent.context
-                ),
-                parent, false
-            )
-        )
-    }
 
-    fun setListener(onItemClick: OnItemClick) {
-        listener = onItemClick
-    }
-
-    fun setImageList(img: List<ImageModel>) {
-        listImage.clear()
-        listImage.addAll(img)
-        notifyDataSetChanged()
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ImageViewHolder(
+        GalleryItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    )
 
     override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
         holder.onBind(listImage[position], position)
@@ -43,7 +27,6 @@ class ImageAdapter : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
 
     inner class ImageViewHolder(private val binding: GalleryItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
         fun onBind(imageModel: ImageModel, position: Int) {
             binding.imgGallery.loadImage(imageModel.image)
 
@@ -52,6 +35,18 @@ class ImageAdapter : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
                 listener.onClicked(imageModel, position)
             }
         }
+
+    }
+
+    fun setListener(onItemClick: OnItemClick) {
+        listener = onItemClick
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setImageList(img: List<ImageModel>) {
+        listImage.clear()
+        listImage.addAll(img)
+        notifyDataSetChanged()
     }
 
     interface OnItemClick {

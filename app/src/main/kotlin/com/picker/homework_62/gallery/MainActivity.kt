@@ -17,8 +17,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ImageAdapter.OnI
 
     private val binding by viewBinding(ActivityMainBinding::bind)
 
-    private lateinit var viewBinding: ActivityMainBinding
-
     private var imageAdapter = ImageAdapter()
     private var images = arrayListOf<ImageModel>()
     private var selectedImages: ArrayList<ImageModel> = ArrayList()
@@ -37,15 +35,13 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ImageAdapter.OnI
         } else {
             loadImages()
         }
-
-
     }
 
     private fun loadImages() {
         images = ImagesGallery.listOfImages(this)
         imageAdapter.setImageList(images)
         imageAdapter.setListener(this)
-        viewBinding.recycler.adapter = imageAdapter
+        binding.recycler.adapter = imageAdapter
     }
 
 
@@ -69,8 +65,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), ImageAdapter.OnI
         imageAdapter.setImageList(images)
         selectedImages.clear()
         selectedImages.addAll(images.filter { it.isSelected })
-        viewBinding.tvCounter.text = "Выбрано ${selectedImages.size} фотографии"
-        viewBinding.btnGet.setOnClickListener {
+        binding.tvCounter.text = "${selectedImages.size} photos selected"
+            binding.btnGet.setOnClickListener {
             sendSelectedImages()
         }
     }
